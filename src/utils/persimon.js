@@ -20,17 +20,29 @@ const persimon = (jsonPath) => {
     all: () => getEntities(jsonPath),
     update: (id, editedObject) => {
       const entities = getEntities(jsonPath);
-      const filteredEntities = entities.filter((entity) => entity.id === id);
+      let entityToUpdate;
+      const filteredEntities = entities.filter((entity) => {
+        if (entity.id === id) {
+          entityToUpdate = entity;
+          return true;
+        }
+        return false;
+      });
       if (filteredEntities.length === entities.length) {
         return entities;
       }
-      filteredEntities.push(editedObject);
+      filteredEntities.push({
+        ...entityToUpdate,
+        ...editedObject,
+        id: editedObject.id,
+      });
       updateJSON(jsonPath, filteredEntities);
       return filteredEntities;
     },
     create: (newObject) => {
       const entities = getEntities(jsonPath);
-      entities.push(newObject);
+      const ids = entities.map((entity) => entity.id);
+      entities.push({ ...newObject, id: Math.max(ids) + 1 });
       updateJSON(jsonPath, entities);
       return entities;
     },
