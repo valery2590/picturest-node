@@ -3,7 +3,7 @@ const { json, urlencoded } = require('body-parser');
 const morgan = require('morgan');
 const config = require('./config.js');
 const cors = require('cors');
-// const userRouter = require('./resources/user/user.router');
+const pinsRouter = require('./resources/pins/pins.router');
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-// app.use('/api/user', userRouter);
+app.use('/api/pins', pinsRouter);
 
 const start = async () => {
   try {

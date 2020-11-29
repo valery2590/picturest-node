@@ -1,5 +1,5 @@
 const persimon = require('../../utils/persimon');
-const db = persimon('../../../assets/pins.json');
+const db = persimon('/assets/pins.json'); // Relative to the project root
 
 const getAll = (req, res) => {
   const pins = db.all();
